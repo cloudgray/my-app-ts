@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { toDoState } from "../atoms";
+import { toDoSelector, toDoState } from "../atoms";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 
 function ToDoList() {
   const toDos = useRecoilValue(toDoState);
+  const selectorOutput = useRecoilValue(toDoSelector)
+  console.log(selectorOutput)
   return (
     <div>
       <h1>To dos</h1>

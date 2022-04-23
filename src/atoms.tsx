@@ -1,6 +1,19 @@
 import { atom, selector } from "recoil";
 
-export const toDoState = atom({
-  key: "toDO",
-  default: ["a", "b", "c", "d", "e", "f"],
+export interface ITodo {
+  id: number;
+  text: string;
+}
+
+interface IToDoState {
+  [key: string]: ITodo[];
+}
+
+export const toDoState = atom<IToDoState>({
+  key: "toDo",
+  default: {
+    "To Do": [],
+    Doing: [],
+    Done: [],
+  },
 });

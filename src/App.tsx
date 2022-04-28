@@ -1,59 +1,63 @@
 import {
-    motion,
-    useMotionValue,
-    useTransform,
-    useViewportScroll,
+  motion,
+  useMotionValue,
+  useTransform,
+  useViewportScroll,
 } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled(motion.div)`
-    height: 200vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 200vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Box = styled(motion.div)`
-    width: 200px;
-    height: 200px;
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 40px;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0, 10px, 20px rgba(0, 0, 0, 0.06);s
+	width: 200px;
+	height: 200px;
+	background-color: rgba(255, 255, 255, 1);
+	border-radius: 40px;
+	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0, 10px, 20px rgba(0, 0, 0, 0.06);s
 `;
 
-const boxVariants = {
-    hover: { rotateZ: 90 },
-    click: { borderRadius: '100px' },
+const Svg = styled.svg`
+  width: 300px;
+  height: 300px;
+  color: white;
+  path {
+    stroke: currentColor;
+  }
+`;
+const svg = {
+  start: { pathLength: 0, fill: 'rgba(255,255,255,0)' },
+  end: { pathLength: 1, fill: 'rgba(255,255,255,1)' },
 };
 
 function App() {
-    const x = useMotionValue(0);
-    const scale = useTransform(x, [-800, 800], [2, 0.5]);
-    const rotateZ = useTransform(x, [-800, 800], [-360, 360]);
-    const gradient = useTransform(
-        x,
-        [-800, 0, 800],
-        [
-            'linear-gradient(135deg, #59c173, #a17fe0, #5d26c1)',
-            'linear-gradient(135deg, rgba(198,255,221,1.0), rgba(251,215,134,1.0), rgba(247,121,125,1.0))',
-            'linear-gradient(to right, #77a1d3, #79cbca, #e684ae)',
-        ]
-    );
-    const { scrollY, scrollYProgress } = useViewportScroll();
-
-    useEffect(() => {
-        x.onChange(() => console.log(rotateZ.get()));
-        scrollY.onChange(() => console.log(scrollY.get()));
-        scrollYProgress.onChange(() => console.log(scrollYProgress.get()));
-    }, [x, scrollY]);
-
-    return (
-        <Wrapper style={{ background: gradient }}>
-            <Box style={{ x, scale, rotateZ }} drag='x' dragSnapToOrigin />
-        </Wrapper>
-    );
+  return (
+    <Wrapper>
+      <Svg
+        focusable='false'
+        xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 512 512'
+      >
+        <motion.path
+          variants={svg}
+          initial='start'
+          animate='end'
+          transition={{
+            default: { duration: 5 },
+            fill: { duration: 2, delay: 3 },
+          }}
+          strokeWidth={2}
+          d='M50.39 220.8C45.93 218.6 42.03 215.5 38.97 211.6C35.91 207.7 33.79 203.2 32.75 198.4C31.71 193.5 31.8 188.5 32.99 183.7C54.98 97.02 146.5 32 256 32C365.5 32 457 97.02 479 183.7C480.2 188.5 480.3 193.5 479.2 198.4C478.2 203.2 476.1 207.7 473 211.6C469.1 215.5 466.1 218.6 461.6 220.8C457.2 222.9 452.3 224 447.3 224H64.67C59.73 224 54.84 222.9 50.39 220.8zM86.4 176H425.6C413 149.5 393 127.3 368 112C368 116.2 366.3 120.3 363.3 123.3C360.3 126.3 356.2 128 352 128C347.8 128 343.7 126.3 340.7 123.3C337.7 120.3 336 116.2 336 112C336 109.3 336.7 106.7 338.1 104.4C339.4 102 341.3 100.1 343.6 98.72C320.4 88.44 295.5 82.41 270.2 80.9C271.3 83.09 271.1 85.52 272 88C272 92.24 270.3 96.31 267.3 99.31C264.3 102.3 260.2 104 256 104C251.8 104 247.7 102.3 244.7 99.31C241.7 96.31 240 92.24 240 88C240 85.52 240.7 83.09 241.8 80.9C216.5 82.41 191.6 88.44 168.4 98.72C170.7 100.1 172.6 102 173.9 104.4C175.3 106.7 175.1 109.3 176 112C176 116.2 174.3 120.3 171.3 123.3C168.3 126.3 164.2 128 160 128C155.8 128 151.7 126.3 148.7 123.3C145.7 120.3 144 116.2 144 112C118.1 127.3 98.95 149.5 86.4 176zM486.6 265.4C492.6 271.4 496 279.5 496 288C496 296.5 492.6 304.6 486.6 310.6C480.6 316.6 472.5 320 464 320H48C39.51 320 31.37 316.6 25.37 310.6C19.37 304.6 16 296.5 16 288C16 279.5 19.37 271.4 25.37 265.4C31.37 259.4 39.51 256 48 256H464C472.5 256 480.6 259.4 486.6 265.4zM475.3 356.7C478.3 359.7 480 363.8 480 368V384C480 409.5 469.9 433.9 451.9 451.9C433.9 469.9 409.5 480 384 480H128C102.5 480 78.12 469.9 60.12 451.9C42.11 433.9 32 409.5 32 384V368C32 363.8 33.69 359.7 36.69 356.7C39.69 353.7 43.76 352 48 352H464C468.2 352 472.3 353.7 475.3 356.7zM411.7 423.2C419.8 417.5 425.9 409.4 429.2 400H82.75C86.06 409.4 92.19 417.5 100.3 423.2C108.4 428.9 118.1 432 128 432H384C393.9 432 403.6 428.9 411.7 423.2z'
+        ></motion.path>
+      </Svg>
+    </Wrapper>
+  );
 }
 
 export default App;

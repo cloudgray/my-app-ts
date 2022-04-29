@@ -1,10 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { RecoilRoot } from "recoil";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
-import App from "./App";
-import { darkTheme } from "./theme";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { RecoilRoot } from 'recoil';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import App from './App';
+import { theme } from './theme';
 
 const queryClient = new QueryClient();
 
@@ -75,11 +75,11 @@ a {
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={theme}>
         <GlobalStyle />
         <App />
       </ThemeProvider>
     </RecoilRoot>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root')
 );

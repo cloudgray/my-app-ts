@@ -6,8 +6,6 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import App from './App';
 import { theme } from './theme';
 
-const queryClient = new QueryClient();
-
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
 
@@ -58,12 +56,13 @@ table {
 * {
   box-sizing: border-box;
 }
+
 body {
-  	font-weight: 300;
-  	font-family: 'Source Sans Pro', sans-serif;
-  	background:linear-gradient(135deg,#e09,#d0e);
-  	color: black;
-  	line-height: 1.2;
+	font-weight: 300;
+	font-family: 'Source Sans Pro', sans-serif;
+	color: #e5e5e5;
+	line-height: 1.2;
+	background-color: black;
 }
 
 a {
@@ -72,13 +71,17 @@ a {
 }
 `;
 
+const queryClient = new QueryClient();
+
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <App />
+        </ThemeProvider>
+      </QueryClientProvider>
     </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')
